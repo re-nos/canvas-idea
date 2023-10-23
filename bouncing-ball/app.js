@@ -12,9 +12,9 @@ class App {
     window.addEventListener('resize', this.resize.bind(this), false);
     this.resize();
     
-    this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 10);
+    this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 5);
 
-    this.draw();
+    window.requestAnimationFrame(this.animate.bind(this));
   }
 
   resize() {
@@ -26,8 +26,12 @@ class App {
     this.ctx.scale(2, 2);
   }
 
-  draw() {
-    this.ball.draw(this.ctx);
+  animate() {
+    window.requestAnimationFrame(this.animate.bind(this));
+
+    this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
+
+    this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
   }
 }
 

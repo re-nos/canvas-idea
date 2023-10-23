@@ -9,10 +9,30 @@ export class Ball {
     this.y = this.radius + (Math.random() * (stageHeight - diameter));
   }
 
-  draw(ctx) {
+  draw(ctx, stageWidth, stageHeight) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    this.bounceWindow(stageWidth, stageHeight);
+
     ctx.fillStyle = '#66545e';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fill();
+  }
+
+  bounceWindow(stageWidth, stageHeight) {
+    const minX = this.radius;
+    const maxX = stageWidth - this.radius;
+    const minY = this.radius;
+    const maxY = stageHeight - this.radius;
+
+    if (this.x <= minX || this.x >= maxX) {
+      this.vx *= -1;
+      this.x += this.vx;
+    } else if (this.y <= minY || this.y >= maxY) {
+      this.vy *= -1;
+      this.y += this.vy;
+    }
   }
 }
