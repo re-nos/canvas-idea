@@ -27,11 +27,21 @@ export class Ball {
     const minY = this.radius;
     const maxY = stageHeight - this.radius;
 
-    if (this.x <= minX || this.x >= maxX) {
+    if (this.x <= minX || this.x == maxX) {
       this.vx *= -1;
       this.x += this.vx;
-    } else if (this.y <= minY || this.y >= maxY) {
+    } else if (this.y <= minY || this.y == maxY) {
       this.vy *= -1;
+      this.y += this.vy;
+    }
+
+    // When the window is resized and the ball goes outside of the window
+    // Set the ball's movement in the opposite direction it went off
+    if (this.x < minX || this.x > maxX) {
+      this.vx = Math.abs(this.vx) * (maxX - this.x) / Math.abs(maxX - this.x);
+      this.x += this.vx;
+    } else if (this.y < minY || this.y > maxY) {
+      this.vy = Math.abs(this.vy) * (maxY - this.y) / Math.abs(maxY - this.y);
       this.y += this.vy;
     }
   }
