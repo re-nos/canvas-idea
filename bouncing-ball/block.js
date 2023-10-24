@@ -9,6 +9,11 @@ export class Block {
     this.maxY = this.y + this.height;
   }
 
+  resize(width) {
+    this.width = width;
+    this.maxX = this.x + this.width;
+  }
+
   draw(ctx) {
     ctx.fillStyle = '#aa6f73';
     ctx.beginPath();

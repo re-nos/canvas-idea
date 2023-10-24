@@ -15,19 +15,16 @@ class App {
 
     window.addEventListener('resize', this.resize.bind(this), false);
     this.resize();
-    
-    this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 5);
 
+    this.isDown = false;
+    document.addEventListener('pointerdown', this.onDown.bind(this), false);
+    document.addEventListener('pointermove', this.onMove.bind(this), false);
+    document.addEventListener('pointerup', this.onUp.bind(this), false);
+    
+    this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 2);
+
+    this.blockOffsetX = 0;
     this.blocks = []
-    const blockNum = Math.random() * 10;
-    for (let i = 0; i < blockNum; i++) {
-      const blockX = Math.random() * this.stageWidth;
-      const blockY = Math.random() * this.stageHeight;
-      const blockWidth = Math.random() * 500 + 100;
-      const blockHeight = 40;
-      
-      this.blocks.push(new Block(blockX, blockY, blockWidth, blockHeight));
-    }
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
@@ -49,7 +46,25 @@ class App {
     this.ball.draw(this.ctx, this.stageWidth, this.stageHeight, this.blocks);
     this.blocks.forEach(block => {
       block.draw(this.ctx);
-    })
+    });
+  }
+
+  onDown(e) {
+    this.isDown = true;
+    this.blockOffsetX = e.clientX;
+    this.blocks.push(new Block(e.clientX, e.clientY, 0, 40));
+  }
+
+  onMove(e) {
+    if (this.isDown) {
+      const moveX = e.clientX - this.blockOffsetX;
+      this.blocks[this.blocks.length -1].resize(moveX);
+      console.log(this.blocks[this.blocks.length -1]);
+    }
+  }
+  
+  onUp(e) {
+    this.isDown = false;
   }
 }
 

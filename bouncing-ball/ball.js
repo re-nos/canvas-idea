@@ -55,15 +55,19 @@ export class Ball {
       const maxY = block.maxY + this.radius;
   
       if (this.x >= minX && this.x <= maxX && this.y >= minY && this.y <= maxY) {
-        const minXDir = Math.min(Math.abs(minX - this.x), Math.abs(this.x - maxX));
-        const minYDir = Math.min(Math.abs(minY - this.y), Math.abs(this.y - maxY));
-        const min = Math.min(minXDir, minYDir);
+        const minXVal = Math.min(Math.abs(minX - this.x), Math.abs(this.x - maxX));
+        const minYVal = Math.min(Math.abs(minY - this.y), Math.abs(this.y - maxY));
+        const min = Math.min(minXVal, minYVal);
+
+        // prevent the ball from getting trapped inside the block
+        const xDir = minXVal == Math.abs(minX - this.x) ? -1 : 1;
+        const yDir = minYVal == Math.abs(minY - this.y) ? -1 : 1;
   
-        if (min == minXDir) {
-          this.vx *= -1;
+        if (min == minXVal) {
+          this.vx = Math.abs(this.vx) * xDir;
           this.x += this.vx;
-        } else if (min == minYDir) {
-          this.vy *= -1;
+        } else if (min == minYVal) {
+          this.vy = Math.abs(this.vy) * yDir;
           this.y += this.vy;
         }
       }
