@@ -17,7 +17,17 @@ class App {
     this.resize();
     
     this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 5);
-    this.block = new Block(this.stageWidth / 2, this.stageHeight / 2, 400, 40);
+
+    this.blocks = []
+    const blockNum = Math.random() * 10;
+    for (let i = 0; i < blockNum; i++) {
+      const blockX = Math.random() * this.stageWidth;
+      const blockY = Math.random() * this.stageHeight;
+      const blockWidth = Math.random() * 500 + 100;
+      const blockHeight = 40;
+      
+      this.blocks.push(new Block(blockX, blockY, blockWidth, blockHeight));
+    }
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
@@ -36,8 +46,10 @@ class App {
 
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
-    this.ball.draw(this.ctx, this.stageWidth, this.stageHeight, this.block);
-    this.block.draw(this.ctx);
+    this.ball.draw(this.ctx, this.stageWidth, this.stageHeight, this.blocks);
+    this.blocks.forEach(block => {
+      block.draw(this.ctx);
+    })
   }
 }
 
