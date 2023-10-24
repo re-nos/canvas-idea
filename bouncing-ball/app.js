@@ -2,6 +2,10 @@ import {
   Ball
 } from './ball.js';
 
+import {
+  Block
+} from './block.js';
+
 class App {
   constructor() {
     this.canvas = document.createElement('canvas');
@@ -13,6 +17,7 @@ class App {
     this.resize();
     
     this.ball = new Ball(this.stageWidth, this.stageHeight, 40, 5);
+    this.block = new Block(this.stageWidth / 2, this.stageHeight / 2, 400, 40);
 
     window.requestAnimationFrame(this.animate.bind(this));
   }
@@ -32,6 +37,7 @@ class App {
     this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
     this.ball.draw(this.ctx, this.stageWidth, this.stageHeight);
+    this.block.draw(this.ctx);
   }
 }
 
