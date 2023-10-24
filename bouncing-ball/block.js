@@ -4,6 +4,9 @@ export class Block {
     this.y = y;
     this.width = width;
     this.height = height;
+
+    this.maxX = this.x + this.width;
+    this.maxY = this.y + this.height;
   }
 
   draw(ctx) {
